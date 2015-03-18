@@ -1,3 +1,16 @@
 == Welcome to Rails
 
-look at `test/unit/parent_test.rb` for examples
+This project is to illustrate some weird duplications that can happen when
+using `joins`. These duplications happen when you do a join without selecting
+something from the joined association. When this happens rails execute a query
+similar to
+
+```
+SELECT parents.* FROM parents INNER JOIN children ON children.parent_id = parents.id
+```
+
+This will return duplicated `parents` rows and rails has no extra information on
+how to group them while instantiating the `Parent` objects
+
+run the `test/unit/parent_test.rb` tests and look at the SQL for details and
+some ways to work around this issue
